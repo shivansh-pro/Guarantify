@@ -1,18 +1,27 @@
 ﻿using Android.App;
-using Android.Widget;
+using Android.Content.PM;
 using Android.OS;
 
 namespace Guarantify
 {
-    [Activity(Label = "Guarantify", MainLauncher = true)]
-    public class MainActivity : Activity
+    [Activity(Label = "Guarantify", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(savedInstanceState);
+            TabLayoutResource = Resource.Layout.Tabbar;
+            ToolbarResource = Resource.Layout.Toolbar;
 
-            // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            base.OnCreate(bundle);
+
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
+            global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            LoadApplication(new Gaurantify.Common.App());
+        }
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }
