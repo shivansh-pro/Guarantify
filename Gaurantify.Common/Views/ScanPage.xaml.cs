@@ -24,8 +24,10 @@ namespace Gaurantify.Common.Views
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 AutomationId = "zxingScannerView",
             };
+
             zxing.OnScanResult += (result) =>
-                Device.BeginInvokeOnMainThread(async () => {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
 
                     // Stop analysis until we navigate away so we don't keep reading barcodes
                     zxing.IsAnalyzing = false;
@@ -36,6 +38,7 @@ namespace Gaurantify.Common.Views
                     // Navigate away
                     await Navigation.PopAsync();
                 });
+            zxing.IsAnalyzing = true;
 
             overlay = new ZXingDefaultOverlay
             {
